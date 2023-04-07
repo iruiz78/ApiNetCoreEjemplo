@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+.using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using WebApplication9.Controllers;
 using WebApplication9.Modelos;
 using WebApplication9.Repocitorio;
@@ -30,23 +30,20 @@ namespace TestApi
             Assert.True(cliente.Id > 0);
         }
 
-
-
         [Fact]
         public void Get_All_OK()
         {
-            var cliente = new Cliente();
-            cliente.Nombre = "eee";
-            cliente.Apellido = "ruiz";
-            cliente = _cliente.Post(cliente);
+            var cliente = _cliente.Post(new Cliente
+                                            {
+                                                Nombre = "eee",
+                                                Apellido = "ruiz"
+                                            });
 
             Assert.True(cliente.Id > 0);
-
             var result = _cliente.Get();
 
             Assert.NotNull(result);
             Assert.IsType<List<Cliente>>(result);
-
             Assert.True(result.Any());
         }
 
@@ -58,7 +55,6 @@ namespace TestApi
 
             Assert.NotNull(result);
             Assert.IsType<List<Cliente>>(result);
-
             Assert.Empty(result);
         }
 
@@ -83,9 +79,7 @@ namespace TestApi
         public void GetById_Empty()
         {
             var cliente = _cliente.Get(1);
-
-            Assert.Null(cliente);
-            
+            Assert.Null(cliente);            
         }
     }
 }
